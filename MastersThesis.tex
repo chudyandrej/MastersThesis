@@ -30,20 +30,22 @@
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 \department{Department of Applied Mathematics}
 \title{Detecting similarities of data domains using machine learning methods}
-\authorGN{Andrej Oliver} %author's given name/names
-\authorFN{Chud\'y} %author's surname
-\authorWithDegrees{Bc. Andrej Oliver Chud\'y} %author's name with academic degrees
-\author{Andrej Oliver Chud\'y} %author's name without academic degrees
+\authorGN{Andrej Oliver} 
+\authorFN{Chud\'y}
+\authorWithDegrees{Bc. Andrej Oliver Chud\'y} 
+\author{Andrej Oliver Chud\'y} 
 \supervisor{Ing. Zdenek Buk, Ph.D.}
 \acknowledgements{I would like to thank my family and friends for support during writing this thesis.}
 \abstractCS{
-% TODO
+% TODO abstractCS
 }
 \abstractEN{
-% TODO
+% TODO abstractEN
 }
-\placeForDeclarationOfAuthenticity{Prague} %where you have signed the declaration
-\keywordsCS{}
+\placeForDeclarationOfAuthenticity{Prague} 
+\keywordsCS{
+% TODO KeywordsCCS
+}
 \keywordsEN{Natural Language Processing, Deep learning, NLP, RNN, CNN, embedding, LSTM, GRU.}
 \declarationOfAuthenticityOption{4} %select as appropriate, according to the desired license
 \website{http://site.example/thesis} %optional URL (remove entirely if you have no URL for this thesis)
@@ -62,7 +64,7 @@
 \chapter{Preliminaries}
 
 \section{What is Deep Learning?}
-First, we need to define clearly what we're talking about. What deep learning is? Deep learning is a specific subfield of machine learning. The deep in deep learning isn't a reference to any kind of deeper understanding but it stands for the idea of successive layers of representations. The count of layers contribute to a model called the depth of the model. Modern deep learning often involves tens or even hundreds of successive layers of representations and they've all learned automatically from exposure training data. In deep learning, these layered representations are (almost always) learned via models called neural networks, structured in literal layers stacked on top of each other. On the next image, you can see how a network several layers deep look like.
+First, we need to define clearly what we're talking about. What deep learning is? Deep learning is a specific subfield of machine learning. The deep in deep learning isn't a reference to any kind of deeper understanding but it stands for the idea of successive layers of representations. The count of layers contribute to a model called the depth of the model. Modern deep learning often involves tens or even hundreds of successive layers of representations and they've all learned automatically from exposure training data. In deep learning, these layered representations are (almost always) learned via models called neural networks, structured in literal layers stacked on top of each other. On the next image, you can see how a network several layers deep look like. \cite{DLwP}
 
 
 \begin{figure}\centering
@@ -75,59 +77,57 @@ The learning process in a neural network is about mapping inputs (image, text, o
 
 The specification of what a layer does to its input data is stored in the layer's weights, which in essence are a bunch of numbers. In technical terms, we'd say that the transformation implemented by a layer is parameterized by its weights. In this context, learning means finding a set of values for the weights of all layers in a network, such that the network will correctly map example inputs to their associated targets. But a deep neural network can contain tens of millions of parameters. Finding the correct values for all of them is a very hard optimization task. 
 
-To judge the output of a neural network, you need to be able to measure how far this output is from what you expected. This is the job of the \textbf{loss function} of the network. The \textbf{loss function} takes the predictions of the network and the true target and computes a distance score, capturing how well the network has done on this specific example. The fundamental trick in deep learning is to use this score as a feedback signal to adjust the value of the weights a little, in a direction that will lower the loss score for the current example. This adjustment is the job of the \textbf{optimizer}, which implements what's called the \textbf{Backpropagation} algorithm which is the most famous algorithm in machine learning for optimization of hyperparametric space of NN.
+To judge the output of a neural network, you need to be able to measure how far this output is from what you expected. This is the job of the \textbf{loss function} of the network. The \textbf{loss function} takes the predictions of the network and the true target and computes a distance score, capturing how well the network has done on this specific example. The fundamental trick in deep learning is to use this score as a feedback signal to adjust the value of the weights a little, in a direction that will lower the loss score for the current example. This adjustment is the job of the \textbf{optimizer}, which implements what's called the \textbf{Backpropagation} algorithm which is the most famous algorithm in machine learning for optimization of hyperparametric space of NN. \nocite{DLwP}
+
+\subsection{Loss functions}
+The loss function is the bread and butter of modern machine learning. It's very easy. It's a method of evaluating how good a model solving the problem over specific take data. Loss functions can be categorized into two types:
+\begin{itemize}
+  \item \textbf{Classification loss} (SVMLoss, Cross Entropy and more) 
+  \item \textbf{Regression loss} (MSE, MAE, MBE and more)
+\end{itemize}
+
+
+
+\subsection{Optimizetor}
+% TODO optimizers
+
 
 
 \section{Recurrent neural networks}
-A principal of the work of the recurrent neural network is more similar to the human brain. When humans read the text, they understand each word based on the understanding of previous words. Traditional feed-forward neural networks can't do this. Recurrent neural network address this problem. Those networks contain loops, allowing persist information.
+A principal of the work of the recurrent neural network is more similar to the human brain. Biological intelligence processes information incrementally. Built from past information and constantly updated as new information comes in. Traditional feed-forward neural networks can't do this. Recurrent neural network (RNN) address this problem. Those networks contain loops, allowing persist information the other words RNN has memory. This allows it to exhibit temporal dynamic behavior. Historically, these networks have been difficult to train, but more recently, advances in research (optimization, network architectures, parallelism, and graphics processing units [GPUs]) have made them more approachable for the practitioner. RNNs have a huge success in speech recognition, language modeling, translation, image captioning and more.
+
+
+\begin{figure}\centering
+	\includegraphics[scale=0.5]{images/RNN_diagram}
+	\caption{RNN  with loop}\label{fig:RNN_loop}
+\end{figure}
+
+RNNs are considered Turing complete and well suited for problems witch the input and/or output is composed of vectors that involve a time dependency between the values. It processes sequences by iterating through the sequence elements and maintaining a state (see figure \ref{fig:RNN_loop}). 
+
+ 
+\subsection{Long Short Term Memory (LSTM)}
+It is a special kind of RNN, capable of learning long-term dependences. LSTMs are explicitly designed to avoid the long-term dependency problem. Remembering information for long periods of time is practically their default behavior, not something they struggle to learn!
+
+
+
+\begin{figure}\centering
+	\includegraphics[scale=0.5]{images/LSTM_1}
+	\caption{Repeating module in an LSTM contains four interacting layers.}\label{fig:LSTM}
+\end{figure}
+
+LSTMs are visualizing as the chain with modules, which contains four layers,  interacting in a very special way.
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-\section{Convolution neural networks (CNN)}
-\section{Recurrent neural networks (RNN)}
-\section{LSTMs}
+% TODO Convolution neural networks
 \section{Summary}
 
 
 
-
-\chapter{Implementation and testing}\label{impltest}
-
-\section{Details of realised tests}
-
-
-\section{Integers distribution and encoding}\label{sec:distr}
-
-The integers encoding of indexes of phrases from the word (non-word) dictionary is possible cause of the only average results of compression ratio of implemented algorithms. The decision is to get the distribution of indexes during the encoding process (and decoding process too). The length of indexes located in shown graphs is only hypothetical---the binary code with minimal length.
-
-The graphs of index distribution also shows the differencies between the algorithms with sorted dictionaries (\textit{WLZWS} and \textit{WLZWES}) and the algorithms with unsorted dictionaries (\textit{WLZW} and \textit{WLZWE}). The most frequently used phrases are moved to the front of dictionary in algorithms with sorted dictionary so they get lower indexes. This feature is demonstrated by the growth of number of indexes at the beginning of the distribution. The compression process of algorithms with sorted dictionaries becomes more efficient when the code with variable length of code words (Fibonacci code) is used but the compression efficiency is supposed to be the same at the transition from the \textit{WLZWE2} algorithm to the \textit{WLZWES2} algorithm---the encoding by block code. 
-
 \begin{conclusion}
-	The word-based dictionary data compression algorithms (a part of lossless data compression) are the subject of this thesis. The lossless data compression is a very important field of research because the data compression allows to reduce the amount of space needed to store data.
 
-	The background of data compression field was presented in Chapter~\ref{textcompr}. There are basic notions and definitions followed by description of character-based dictionary algorithms. The word-based dictionary compression methods were investigated and discussed at the end of this chapter too.
-
-% 	There is the investigation of index distribution of tested files in Section \ref{sec:distr}. It led to the new modification of semi-adaptive word-based \gls{LZW} algorithm---\textit{WLZWE2}. The compression efficiency of this algorithm applied to the large files is better than the other implemented algorithms. However, the compression efficiency of \textit{WLZWE2} algorithm is much worse when it is applied to the small files. The experiments with \textit{WLZWE2} and \textit{WLZWES2} algorithms confirm the assumption from Section \ref{sec:distr}---the compression efficiency of version with unsorted dictionaries (\textit{WLZWE2}) is analogous to version with sorted ones (\textit{WLZWES2}).
-
-	The testing of memory used during compression and/or decompression process is one of the possibilities of further research. The experiments with files of greater size or multilingual files could be also good opportunity to gain new improvements of algorithms. The static part of dictionaries could improve the compression efficiency too.
-
-	The implemented methods achieve fairly good compression ratio (25--30$\%$ at large files) with acceptable compression and decompression time. There are possibilities of further improvements especially at semi-adaptive methods. However, the gain of these improvements is not good enough to top the compression efficiency of other lossless data compression methods (context methods from PPM family). The results of implemented algorithms were not as good as it was expected but the work on this thesis showed new ways of possible further research---word-based version of grammar-based compression algorithms and another possibilities in the field of word-based context methods of data compression.
-
-	The Gnuplot 4.2 utility was very useful for generation of graphs in this thesis. There was the drawing editor Ipe 6.0 used for figures creation.
-	\nocite{Po01}
 \end{conclusion}
 
 \bibliographystyle{iso690.bst}
@@ -138,8 +138,6 @@ The graphs of index distribution also shows the differencies between the algorit
 % \printglossaries
 
 \chapter{Contents of CD}\label{app:CDcontent}
-
-Visualise the contents of enclosed media. Use of \verb|dirtree| is recommended. Note that directories src and text with appropriate contents are mandatory.
 
 
 \begin{figure}
